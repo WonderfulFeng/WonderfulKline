@@ -16,7 +16,9 @@ import com.github.mikephil.charting.data.CandleData;
 import com.github.mikephil.charting.data.CandleDataSet;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.spark.myapplication.R;
 import com.spark.myapplication.data.LocalData;
 import com.spark.myapplication.entity.KData;
@@ -73,10 +75,12 @@ public class KlineActivity extends AppCompatActivity {
     }
 
     private void initLineDataset() {
-        LineDataSet linedataset1 = initLineDataSet(kData.getM5Entries(), "MA5", Color.parseColor("#5C3F7D"));
-        LineDataSet linedataset2 = initLineDataSet(kData.getM10Entries(), "MA10", Color.parseColor("#37445B"));
-        LineDataSet linedataset3 = initLineDataSet(kData.getM30Entries(), "MA30", Color.parseColor("#386D48"));
-
+        final LineDataSet linedataset1 = initLineDataSet(kData.getM5Entries(), "MA5", Color.parseColor("#5C3F7D"));
+        final LineDataSet linedataset2 = initLineDataSet(kData.getM10Entries(), "MA10", Color.parseColor("#37445B"));
+        final LineDataSet linedataset3 = initLineDataSet(kData.getM30Entries(), "MA30", Color.parseColor("#386D48"));
+        List<ILineDataSet> dataSets = new ArrayList<ILineDataSet>(){{add(linedataset1);add(linedataset2);add(linedataset3);}};
+        LineData data = new LineData(kData.getxLabels(),dataSets);
+        combinedData.setData(data);
     }
 
     private LineDataSet initLineDataSet(List<Entry> entries, String lable, int color) {

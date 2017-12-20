@@ -41,22 +41,25 @@ public class KData {
             JSONArray data = array.getJSONArray(i);
             xLabels.add(data.getString(0));
             candleEntries.add(new CandleEntry(i, (float) data.getDouble(3), (float) data.getDouble(4), (float) data.getDouble(1), (float) data.getDouble(2)));
-            if (i > 4) {
-                m5Entries.add(new Entry(getAvg(data, 5, i - 4, i), i));
+            if (i >= 4) {
+                m5Entries.add(new Entry(getAvg(array, 5, i - 4, i), i));
             }
             if (i >= 9) {
-                m10Entries.add(new Entry(getAvg(data, 10, i - 9, i), i));
+                m10Entries.add(new Entry(getAvg(array, 10, i - 9, i), i));
             }
             if (i >= 29) {
-                m10Entries.add(new Entry(getAvg(data, 30, i - 29, i), i));
+                m30Entries.add(new Entry(getAvg(array, 30, i - 29, i), i));
             }
 
         }
     }
 
-    private float getAvg(JSONArray data, int n, int start, int end) throws JSONException {
+    private float getAvg(JSONArray array, int n, int start, int end) throws JSONException {
         float sum = 0;
-        for (int i = start; i < end; i++) sum += (float) data.getDouble(2);
+        for (int i = start; i <= end; i++) {
+            JSONArray data = array.getJSONArray(i);
+            sum += (float) data.getDouble(2);
+        }
         return sum / n;
     }
 
