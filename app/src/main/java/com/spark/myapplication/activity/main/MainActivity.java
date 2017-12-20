@@ -1,8 +1,12 @@
-package com.spark.myapplication;
+package com.spark.myapplication.activity.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.view.View;
+
+import com.spark.myapplication.R;
+import com.spark.myapplication.activity.kline.KlineActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,12 +23,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
-        initChart();
+        setViews();
     }
 
-    private void initChart() {
-
+    private void setViews() {
+        cvCandleStickChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                KlineActivity.actionStart(MainActivity.this);
+            }
+        });
     }
+
 
     @Override
     protected void onDestroy() {
